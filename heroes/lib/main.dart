@@ -1,11 +1,16 @@
 import 'package:flare_splash_screen/flare_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:heroes/pages/games.dart';
+import 'package:heroes/pages/login.dart';
+import 'package:heroes/pages/signup.dart';
+import 'package:heroes/presenters/games/games.dart';
 import 'package:heroes/presenters/login/login.dart';
 import 'package:heroes/repositories/games/games.dart';
 import 'package:heroes/repositories/games/interface.dart';
 import 'package:heroes/repositories/users/interface.dart';
 import 'package:heroes/repositories/users/user.dart';
+import 'package:load/load.dart';
 
 import 'init_locator.dart';
 
@@ -49,6 +54,11 @@ class App extends StatelessWidget {
         startAnimation: '1',
       ),
       routes: {
+        '/games': (context) => GamesPage(
+            presenter: GamesPresenter(gameRepository: gameRepository)),
+        '/login': (context) => LoginPage(
+            presenter: LoginPresenter(userRepository: userRepository)),
+        '/signup': (context) => SignupPage(userRepository: userRepository),
       },
     );
   }
