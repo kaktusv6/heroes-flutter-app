@@ -1,12 +1,13 @@
 import 'dart:io';
 
 import 'package:heroes/api/base_api.dart';
+import 'package:heroes/api/interface_heroes_api.dart';
 import 'package:heroes/storages/api_key.dart';
 import 'package:heroes/storages/storage_token.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-class HeroesApiClient extends BaseApiClient {
+class HeroesApiClient extends BaseApiClient implements IHeroesApiClient {
   final TokenStorage _tokenStorage = TokenStorage();
   final ApiKeyStorage _apiKeyStorage = ApiKeyStorage();
 
@@ -16,6 +17,7 @@ class HeroesApiClient extends BaseApiClient {
           client: new http.Client(),
         );
 
+  @override
   Future<String> register(String login, String password) async {
     var response = await this.post('user/register', body: {
       'login': login,
@@ -25,6 +27,7 @@ class HeroesApiClient extends BaseApiClient {
     return response['token'];
   }
 
+  @override
   Future<String> login(String login, String password) async {
     var response = await this.post(
       'user/login',
@@ -37,6 +40,7 @@ class HeroesApiClient extends BaseApiClient {
     return response['token'];
   }
 
+  @override
   Future<bool> logout() async {
     var response = await this.post(
       'user/logout',
@@ -52,6 +56,7 @@ class HeroesApiClient extends BaseApiClient {
     return response['is_logout'];
   }
 
+  @override
   Future<Map<String, String>> authHeader() async {
     return {
       HttpHeaders.authorizationHeader:
@@ -65,6 +70,7 @@ class HeroesApiClient extends BaseApiClient {
         query: {'api_key': await this._apiKeyStorage.getValue()});
   }
 
+  @override
   String generatePathApi(String path) {
     return '/api/' + path;
   }
