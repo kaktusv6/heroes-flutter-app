@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:heroes/repositories/user.dart';
+import 'package:heroes/presenters/login/interface.dart';
 import 'package:heroes/widgets/login_form.dart';
 
-class Login extends StatelessWidget {
-  final UserRepository userRepository;
+class LoginPage extends StatelessWidget {
+  final ILoginPresenter presenter;
 
-  Login({Key key, @required this.userRepository})
-      : assert(userRepository != null),
+  LoginPage({Key key, @required this.presenter})
+      : assert(presenter != null),
         super(key: key);
 
   @override
@@ -15,7 +15,7 @@ class Login extends StatelessWidget {
       appBar: AppBar(
         title: Text('Login'),
       ),
-      body: LoginForm(),
+      body: LoginForm(presenter: presenter),
     );
   }
 }
