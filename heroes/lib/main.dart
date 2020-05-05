@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:heroes/repositories/user.dart';
 import 'package:heroes/presenters/login/login.dart';
+import 'package:heroes/repositories/games/games.dart';
+import 'package:heroes/repositories/games/interface.dart';
 import 'package:heroes/repositories/users/interface.dart';
 import 'package:heroes/repositories/users/user.dart';
 
@@ -12,11 +14,13 @@ void main() async {
   await DotEnv().load('.env');
   setupLocator();
   final IUserRepository userRepository = UserRepository();
+  final IGameRepository gameRepository = GameRepository();
 
   runApp(
     LoadingProvider(
         child: App(
             userRepository: userRepository,
+            gameRepository: gameRepository,
         )
     ),
   );
@@ -24,10 +28,12 @@ void main() async {
 
 class App extends StatelessWidget {
   final IUserRepository userRepository;
+  final IGameRepository gameRepository;
 
   App({
     Key key,
     @required this.userRepository,
+    @required this.gameRepository
   })
       : super(key: key);
 
